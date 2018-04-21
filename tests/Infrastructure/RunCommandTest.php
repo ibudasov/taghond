@@ -7,6 +7,8 @@ namespace Taghond\Tests\Infrastructure;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Console\Tester\CommandTester;
+use Taghond\Domain\FileReader;
+use Taghond\Domain\Picture;
 use Taghond\Infrastructure\RunCommand;
 
 class RunCommandTest extends KernelTestCase
@@ -15,8 +17,13 @@ class RunCommandTest extends KernelTestCase
     {
         $kernel = self::bootKernel();
         $application = new Application($kernel);
+        $fileReaderMock = \Mockery::mock(FileReader::class);
+        $fileReaderMock->shouldReceive('readDirectory')
+            ->once()
+            ->with('/tmp')
+            ->andReturn([new Picture('/tmp/1.jpg')]);
 
-        $application->add(new RunCommand());
+        $application->add(new RunCommand($fileReaderMock));
 
         $command = $application->find('taghond:run');
         $commandTester = new CommandTester($command);
