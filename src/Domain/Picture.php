@@ -12,6 +12,11 @@ class Picture
     private $pathToFile;
 
     /**
+     * @var Tag[]
+     */
+    private $tags;
+
+    /**
      * Picture constructor.
      *
      * @param string $pathToFile
@@ -27,5 +32,17 @@ class Picture
     public function getPathToFile(): string
     {
         return $this->pathToFile;
+    }
+
+    /**
+     * @param Tag $tag
+     *
+     * @return int
+     */
+    public function addTag(Tag $tag): int
+    {
+        $this->tags[] = $tag;
+
+        return \count($this->tags);
     }
 }
