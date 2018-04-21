@@ -20,9 +20,13 @@ class RunCommandTest extends KernelTestCase
 
         $command = $application->find('taghond:run');
         $commandTester = new CommandTester($command);
-        $commandTester->execute(array(
+        $commandTester->execute([
             'command' => $command->getName(),
-        ));
+            'directoryWithPictures' => '/tmp',
+            'basicTags' => 'landscape, amsterdam, netherlands',
+            'geoTag' => '52.356582, 4.871792'
+        ]);
+
 
         $output = $commandTester->getDisplay();
         $this->assertContains('Taghond is running', $output);
