@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Taghond\Infrastructure;
 
-
 use Taghond\Domain\Picture;
 use Taghond\Domain\Tag;
 use Taghond\Domain\TagReader;
@@ -16,6 +15,7 @@ class IptcTagReader implements TagReader
 
     /**
      * @param Picture $picture
+     *
      * @return Tag[]
      */
     public function readTags(Picture $picture): array
@@ -30,8 +30,8 @@ class IptcTagReader implements TagReader
 
         $result = [];
         foreach (array_keys($iptc) as $s) {
-            for ($i = 0; $i < count($iptc[$s]); $i++) {
-                if ($s === self::TAG_KEY) {
+            for ($i = 0; $i < count($iptc[$s]); ++$i) {
+                if (self::TAG_KEY === $s) {
                     $result[] = new Tag($iptc[$s][$i]);
                 }
             }

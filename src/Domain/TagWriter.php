@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Taghond\Domain;
 
-interface TagReader
+interface TagWriter
 {
     /**
      * @param Picture $picture
      *
-     * @return Tag[]
+     * @return Picture
      */
-    public function readTags(Picture $picture): array;
+    public function writeTags(Picture $picture): Picture;
 }
