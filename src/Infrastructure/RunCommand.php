@@ -50,9 +50,9 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
             'Looking for pictures in directory: '.$input->getArgument('directoryWithPictures'),
         ]);
 
-        $foundPictures = \count($this->fileReader->readDirectory($input->getArgument('directoryWithPictures')));
+        $foundPictures = $this->fileReader->readDirectory($input->getArgument('directoryWithPictures'));
 
-        $output->writeln("Found $foundPictures pictures");
+        $output->writeln('Found '.\count($foundPictures).' pictures');
 
         $output->writeln('Setting up these tags for every picture: '.$input->getArgument('basicTags'));
 
