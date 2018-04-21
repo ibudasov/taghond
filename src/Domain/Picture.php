@@ -45,4 +45,12 @@ class Picture
 
         return \count($this->tags);
     }
+
+    /**
+     * @return Tag[]
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
 }

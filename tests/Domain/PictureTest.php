@@ -26,4 +26,15 @@ class PictureTest extends TestCase
 
         self::assertEquals(1, $picture->addTag($tagMock));
     }
+
+    public function testThatTagsCanBeRetrieved(): void
+    {
+        $picture = new Picture('/tmp');
+
+        $tagMock = \Mockery::mock(Tag::class);
+
+        $picture->addTag($tagMock);
+
+        self::assertEquals([$tagMock], $picture->getTags());
+    }
 }
