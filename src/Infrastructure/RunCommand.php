@@ -21,9 +21,9 @@ class RunCommand extends Command
             ->setName('taghond:run')
             ->setDescription('Runs Taghond')
             ->setHelp(
-"Once this command is running, Taghond will check the specified folder and try to set appropriate tags to the pictures.
+'Once this command is running, Taghond will check the specified folder and try to set appropriate tags to the pictures.
 Command and parameters could look like this: 
-taghond:run /tmp \"amsterdam, nederlands\" \"52.356582, 4.871792\"")
+taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"')
             ;
     }
 
@@ -36,9 +36,9 @@ taghond:run /tmp \"amsterdam, nederlands\" \"52.356582, 4.871792\"")
         $output->writeln([
             'Taghond is running...',
             '=====================',
-            'Looking for pictures in directory: ' . $input->getArgument('directoryWithPictures'),
-            'Setting up these tags for every picture: ' . $input->getArgument('basicTags'),
-            'Setting up geo tags: ' . $input->getArgument('geoTag'),
+            'Looking for pictures in directory: '.$input->getArgument('directoryWithPictures'),
+            'Setting up these tags for every picture: '.$input->getArgument('basicTags'),
+            'Setting up geo tags: '.$input->getArgument('geoTag'),
         ]);
     }
 }

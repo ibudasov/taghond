@@ -24,9 +24,8 @@ class RunCommandTest extends KernelTestCase
             'command' => $command->getName(),
             'directoryWithPictures' => '/tmp',
             'basicTags' => 'landscape, amsterdam, netherlands',
-            'geoTag' => '52.356582, 4.871792'
+            'geoTag' => '52.356582, 4.871792',
         ]);
-
 
         $output = $commandTester->getDisplay();
         $this->assertContains('Taghond is running', $output);
