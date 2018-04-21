@@ -1,3 +1,6 @@
+[![Test Coverage](https://api.codeclimate.com/v1/badges/b6f06be3f641b0da68b1/test_coverage)](https://codeclimate.com/github/ibudasov/taghond/test_coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/b6f06be3f641b0da68b1/maintainability)](https://codeclimate.com/github/ibudasov/taghond/maintainability)
+
 # taghond
 Automated tool for setting up tags to pictures before uploading them to image stocks. 
 
