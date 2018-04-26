@@ -4,14 +4,12 @@ declare(strict_types=1);
 
 namespace Taghond\Infrastructure;
 
-
 use Taghond\Domain\Picture;
 use Taghond\Domain\Recognizer;
 use Taghond\Domain\Tag;
 
-class GoogleRecognizer implements Recognizer
+class MicrosoftRecognizer implements Recognizer
 {
-
     /**
      * @param Picture $picture
      *

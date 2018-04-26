@@ -20,16 +20,16 @@ class IptcTagReader implements TagReader
      */
     public function readTags(Picture $picture): array
     {
-        getimagesize($picture->getPathToFile(), $info);
+        \getimagesize($picture->getPathToFile(), $info);
 
         if (false === \is_array($info)) {
             return [];
         }
 
-        $iptc = iptcparse($info[self::IPTC_SECTION]);
+        $iptc = \iptcparse($info[self::IPTC_SECTION]);
 
         $result = [];
-        foreach (array_keys($iptc) as $s) {
+        foreach (\array_keys($iptc) as $s) {
             for ($i = 0; $i < count($iptc[$s]); ++$i) {
                 if (self::TAG_KEY === $s) {
                     $result[] = new Tag($iptc[$s][$i]);

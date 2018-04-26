@@ -8,20 +8,25 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Taghond\Application\PictureApplicationService;
 use Taghond\Domain\FileReader;
 
 class RunCommand extends Command
 {
     /** @var FileReader */
     private $fileReader;
+    /** @var PictureApplicationService */
+    private $pictureApplicationService;
 
     /**
-     * @param FileReader $fileReader
+     * @param FileReader                $fileReader
+     * @param PictureApplicationService $pictureApplicationService
      */
-    public function __construct(FileReader $fileReader)
+    public function __construct(FileReader $fileReader, PictureApplicationService $pictureApplicationService)
     {
         parent::__construct();
         $this->fileReader = $fileReader;
+        $this->pictureApplicationService = $pictureApplicationService;
     }
 
     protected function configure(): void
@@ -54,8 +59,8 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
 
         $output->writeln('Found '.\count($foundPictures).' pictures');
 
-        $output->writeln('Setting up these tags for every picture: '.$input->getArgument('basicTags'));
-
-        $output->writeln('Setting up geo tags: '.$input->getArgument('geoTag'));
+        foreach ($foundPictures as $picture) {
+            $this->pictureApplicationService->updatePicture($picture);
+        }
     }
 }
