@@ -20,7 +20,7 @@ class IptcTagReader implements TagReader
      */
     public function readTags(Picture $picture): array
     {
-        \getimagesize($picture->getPathToFile(), $info);
+        getimagesize($picture->getPathToFile(), $info);
 
         if (false === \is_array($info)) {
             return [];
