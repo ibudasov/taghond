@@ -17,4 +17,13 @@ class TagTest extends TestCase
 
         self::assertEquals($tagValue, $tag->getValue());
     }
+
+    public function testThatTagCanBeConvertedToString(): void
+    {
+        $tagValue = 'oslo';
+
+        $tag = new Tag($tagValue);
+
+        self::assertEquals($tagValue, (string) $tag);
+    }
 }
