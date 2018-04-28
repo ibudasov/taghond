@@ -29,7 +29,10 @@ class SymfonyFileReader implements FileReader
             ->files()
             ->in($pathToDirectory)
             ->name('*.jpeg')
-            ->name('*.jpg');
+            ->name('*.jpg')
+            // this pattern we need to do not process thumbnails
+            ->name('/^[a-zA-Z0-9]{1,11}$/')
+        ;
 
         $result = [];
         /** @var \SplFileInfo $file */

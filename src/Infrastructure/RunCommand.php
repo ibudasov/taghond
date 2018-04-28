@@ -50,7 +50,8 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        ini_set('memory_limit', '-1');
+        // Pictures usually ~20mb of size, so it's quite exhaustive for the memory.
+        \ini_set('memory_limit', '-1');
 
         $output->writeln([
             'Taghond is running...',

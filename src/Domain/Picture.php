@@ -38,6 +38,8 @@ class Picture
         $this->fileName = $this->deductFileName();
 
         $this->pathToThumbnailFile = $this->deductThumbnailPath();
+
+        $this->tags = [];
     }
 
     /**
@@ -91,9 +93,11 @@ class Picture
     {
         $pathInfo = \pathinfo($this->pathToFile);
 
+        $extension = $pathInfo['extension'] ?? '';
+
         return \str_replace(
-            '.'.$pathInfo['extension'],
-            '_thumbnail.'.$pathInfo['extension'],
+            '.'.$extension,
+            '_thumbnail.'.$extension,
             $this->pathToFile
         );
     }
