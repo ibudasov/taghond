@@ -12,6 +12,11 @@ class Picture
     private $pathToFile;
 
     /**
+     * @var string
+     */
+    private $fileName;
+
+    /**
      * @var Tag[]
      */
     private $tags;
@@ -24,6 +29,9 @@ class Picture
     public function __construct(string $pathToFile)
     {
         $this->pathToFile = $pathToFile;
+
+        $chunksOfPathToFile = \explode('/', $pathToFile);
+        $this->fileName = \end($chunksOfPathToFile);
     }
 
     /**
@@ -53,4 +61,13 @@ class Picture
     {
         return $this->tags;
     }
+
+    /**
+     * @return string
+     */
+    public function getFileName(): string
+    {
+        return $this->fileName;
+    }
+
 }

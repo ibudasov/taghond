@@ -66,7 +66,7 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
         foreach ($foundPictures as $picture) {
             $updatedPicture = $this->pictureApplicationService->updatePicture($picture);
             $tags = \implode(', '.PHP_EOL, $updatedPicture->getTags());
-            $table->addRow([$picture->getPathToFile(), $tags]);
+            $table->addRow([$picture->getFileName(), $tags]);
         }
 
         $table->render();

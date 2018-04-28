@@ -48,4 +48,13 @@ class PictureTest extends TestCase
 
         self::assertEquals(2, \count($picture->getTags()));
     }
+
+
+    public function testThatFileNameIsDeductedAndCanBeRetrieved(): void
+    {
+        $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
+
+        self::assertEquals('DSCF9146.jpg', $picture->getFileName());
+
+    }
 }

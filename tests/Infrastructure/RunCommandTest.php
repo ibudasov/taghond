@@ -23,9 +23,9 @@ class RunCommandTest extends KernelTestCase
         $pictureMock->shouldReceive('getTags')
             ->once()
             ->andReturn([]);
-        $pictureMock->shouldReceive('getPathToFile')
+        $pictureMock->shouldReceive('getFileName')
             ->once()
-            ->andReturn('/tmp');
+            ->andReturn('DSCF9146.jpg');
 
         $fileReaderMock = \Mockery::mock(FileReader::class);
         $fileReaderMock->shouldReceive('readDirectory')
