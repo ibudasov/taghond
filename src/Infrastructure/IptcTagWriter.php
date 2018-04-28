@@ -24,6 +24,7 @@ class IptcTagWriter implements TagWriter
      * @param Picture $picture
      *
      * @return Picture
+     *
      * @throws \Exception
      */
     public function writeTags(Picture $picture): Picture

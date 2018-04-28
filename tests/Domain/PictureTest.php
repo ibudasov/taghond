@@ -12,7 +12,7 @@ class PictureTest extends TestCase
 {
     public function testThatPictureCanBeCreatedAndPathToFileCanBeRetrieved(): void
     {
-        $expectedPathToFile = '/tmp';
+        $expectedPathToFile = '/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg';
         $picture = new Picture($expectedPathToFile);
 
         self::assertEquals($expectedPathToFile, $picture->getPathToFile());
@@ -20,7 +20,7 @@ class PictureTest extends TestCase
 
     public function testThatTagCanBeAddedToThePicture(): void
     {
-        $picture = new Picture('/tmp');
+        $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
 
         $tagMock = \Mockery::mock(Tag::class);
 
@@ -29,7 +29,7 @@ class PictureTest extends TestCase
 
     public function testThatTagsCanBeRetrieved(): void
     {
-        $picture = new Picture('/tmp');
+        $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
 
         $tag = new Tag('ok');
 
@@ -40,7 +40,7 @@ class PictureTest extends TestCase
 
     public function testThatOnlyUniqueTagsCanBeAdded(): void
     {
-        $picture = new Picture('/tmp');
+        $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
 
         $picture->addTag(new Tag('ok'));
         $picture->addTag(new Tag('ok'));
@@ -49,12 +49,20 @@ class PictureTest extends TestCase
         self::assertEquals(2, \count($picture->getTags()));
     }
 
-
     public function testThatFileNameIsDeductedAndCanBeRetrieved(): void
     {
         $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
 
         self::assertEquals('DSCF9146.jpg', $picture->getFileName());
+    }
 
+    public function testThatPictureCanDeductThePathToFileOfThumbnail(): void
+    {
+        $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
+
+        self::assertEquals(
+            '/Users/igorbudasov/Desktop/forShutterstock/DSCF9146_thumbnail.jpg',
+            $picture->getPathToThumbnailFile()
+        );
     }
 }

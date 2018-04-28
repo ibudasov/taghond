@@ -53,7 +53,7 @@ class MicrosoftRecognizer implements Recognizer
         $decodedResponse = \json_decode($response->getBody()->getContents());
 
         $tags = [];
-        foreach($decodedResponse->description->tags as $tag) {
+        foreach ($decodedResponse->description->tags as $tag) {
             $tags[] = new Tag($tag);
         }
 

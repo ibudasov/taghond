@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace Taghond\Tests\Infrastructure;
 
-
 use Mockery\MockInterface;
 use Taghond\Domain\Picture;
 use Taghond\Infrastructure\IptcTagReader;
 
-function getimagesize($param1, $param2) {
+function getimagesize($param1, $param2)
+{
     return IptcTagReaderTest::$functions->getimagesize($param1, $param2);
 }
 
@@ -22,7 +22,6 @@ class IptcTagReaderTest //extends TestCase
     {
         self::$functions = \Mockery::mock();
     }
-
 
     public function testThatTagsCanBeRead(): void
     {

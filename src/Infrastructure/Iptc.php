@@ -78,7 +78,7 @@ class Iptc
 
         if (!\in_array(\end($parts), $this->supportedExtensions)) {
             throw new \Exception(
-                'Support only for the following extensions: ' . \json_encode($this->supportedExtensions)
+                'Support only for the following extensions: '.\json_encode($this->supportedExtensions)
             );
         }
 
@@ -90,7 +90,6 @@ class Iptc
 
         $this->pathToFile = $pathToFile;
     }
-
 
     /**
      * Set parameters you want to record in a particular tag "IPTC".

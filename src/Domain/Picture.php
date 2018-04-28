@@ -14,6 +14,11 @@ class Picture
     /**
      * @var string
      */
+    private $pathToThumbnailFile;
+
+    /**
+     * @var string
+     */
     private $fileName;
 
     /**
@@ -30,8 +35,9 @@ class Picture
     {
         $this->pathToFile = $pathToFile;
 
-        $chunksOfPathToFile = \explode('/', $pathToFile);
-        $this->fileName = \end($chunksOfPathToFile);
+        $this->fileName = $this->deductFileName();
+
+        $this->pathToThumbnailFile = $this->deductThumbnailPath();
     }
 
     /**
@@ -70,4 +76,35 @@ class Picture
         return $this->fileName;
     }
 
+    /**
+     * @return string
+     */
+    public function getPathToThumbnailFile(): string
+    {
+        return $this->pathToThumbnailFile;
+    }
+
+    /**
+     * @return string
+     */
+    private function deductThumbnailPath(): string
+    {
+        $pathInfo = \pathinfo($this->pathToFile);
+
+        return \str_replace(
+            '.'.$pathInfo['extension'],
+            '_thumbnail.'.$pathInfo['extension'],
+            $this->pathToFile
+        );
+    }
+
+    /**
+     * @return string
+     */
+    private function deductFileName(): string
+    {
+        $pathInfo = \pathinfo($this->pathToFile);
+
+        return $pathInfo['basename'];
+    }
 }
