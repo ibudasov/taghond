@@ -27,7 +27,12 @@ class RunCommand extends Command
     public function __construct(FileReader $fileReader, PictureApplicationService $pictureApplicationService)
     {
         parent::__construct();
+
+        // Pictures usually ~20mb of size, so it's quite exhaustive for the memory.
+        \ini_set('memory_limit', '-1');
+
         $this->fileReader = $fileReader;
+
         $this->pictureApplicationService = $pictureApplicationService;
     }
 
@@ -51,9 +56,6 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
      */
     protected function execute(InputInterface $input, OutputInterface $output): void
     {
-        // Pictures usually ~20mb of size, so it's quite exhaustive for the memory.
-        \ini_set('memory_limit', '-1');
-
         $output->writeln([
             'Taghond is running...',
             '=====================',
