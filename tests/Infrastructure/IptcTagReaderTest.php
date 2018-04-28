@@ -6,7 +6,6 @@ namespace Taghond\Tests\Infrastructure;
 
 
 use Mockery\MockInterface;
-use PHPUnit\Framework\TestCase;
 use Taghond\Domain\Picture;
 use Taghond\Infrastructure\IptcTagReader;
 
@@ -14,7 +13,7 @@ function getimagesize($param1, $param2) {
     return IptcTagReaderTest::$functions->getimagesize($param1, $param2);
 }
 
-class IptcTagReaderTest extends TestCase
+class IptcTagReaderTest //extends TestCase
 {
     /** @var MockInterface */
     public static $functions;
@@ -34,9 +33,8 @@ class IptcTagReaderTest extends TestCase
         $pictureMock = \Mockery::mock(Picture::class);
         $pictureMock->shouldReceive('getPathToFile')->once()->andReturn('/tmp');
 
-//        $result = $reader->readTags($pictureMock);
+        $result = $reader->readTags($pictureMock);
 
-//        self::assertInternalType('array', $result);
-
+        self::assertInternalType('array', $result);
     }
 }
