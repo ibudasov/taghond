@@ -20,6 +20,12 @@ class RunCommandTest extends KernelTestCase
         $application = new Application($kernel);
 
         $pictureMock = \Mockery::mock(Picture::class);
+        $pictureMock->shouldReceive('getTags')
+            ->once()
+            ->andReturn([]);
+        $pictureMock->shouldReceive('getPathToFile')
+            ->once()
+            ->andReturn('/tmp');
 
         $fileReaderMock = \Mockery::mock(FileReader::class);
         $fileReaderMock->shouldReceive('readDirectory')
