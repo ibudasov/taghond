@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Taghond\Infrastructure;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -59,8 +60,15 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
 
         $output->writeln('Found '.\count($foundPictures).' pictures');
 
+        $table = new Table($output);
+        $table->setHeaders(['Picture', 'Tags']);
+
         foreach ($foundPictures as $picture) {
-            $this->pictureApplicationService->updatePicture($picture);
+            $updatedPicture = $this->pictureApplicationService->updatePicture($picture);
+            $tags = \implode(', '.PHP_EOL, $updatedPicture->getTags());
+            $table->addRow([$picture->getPathToFile(), $tags]);
         }
+
+        $table->render();
     }
 }
