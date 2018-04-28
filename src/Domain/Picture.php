@@ -41,7 +41,7 @@ class Picture
      */
     public function addTag(Tag $tag): int
     {
-        $this->tags[] = $tag;
+        $this->tags[(string) $tag] = $tag;
 
         return \count($this->tags);
     }

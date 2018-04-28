@@ -31,10 +31,21 @@ class PictureTest extends TestCase
     {
         $picture = new Picture('/tmp');
 
-        $tagMock = \Mockery::mock(Tag::class);
+        $tag = new Tag('ok');
 
-        $picture->addTag($tagMock);
+        $picture->addTag($tag);
 
-        self::assertEquals([$tagMock], $picture->getTags());
+        self::assertEquals(['ok' => $tag], $picture->getTags());
+    }
+
+    public function testThatOnlyUniqueTagsCanBeAdded(): void
+    {
+        $picture = new Picture('/tmp');
+
+        $picture->addTag(new Tag('ok'));
+        $picture->addTag(new Tag('ok'));
+        $picture->addTag(new Tag('no'));
+
+        self::assertEquals(2, \count($picture->getTags()));
     }
 }
