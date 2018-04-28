@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Taghond\Infrastructure;
 
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Helper\ProgressBar;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -63,14 +64,22 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
 
         $output->writeln('Found '.\count($foundPictures).' pictures');
 
+        $progressBar = new ProgressBar($output, \count($foundPictures));
+        $progressBar->start();
+
         $table = new Table($output);
         $table->setHeaders(['Picture', 'Tags']);
 
         foreach ($foundPictures as $picture) {
+            $progressBar->advance();
             $updatedPicture = $this->pictureApplicationService->updatePicture($picture);
             $tags = \implode(', '.PHP_EOL, $updatedPicture->getTags());
             $table->addRow([$picture->getFileName(), $tags]);
         }
+
+        $progressBar->finish();
+
+        $output->writeln('');
 
         $table->render();
     }
