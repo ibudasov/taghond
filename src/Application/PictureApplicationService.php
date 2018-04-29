@@ -43,11 +43,13 @@ class PictureApplicationService
             $picture->addTag($currentTag);
         }
 
-        $recognizedTags = $this->recognizer->recognize($picture);
+        $this->recognizer->recognize($picture);
 
-        foreach ($recognizedTags as $recognizedRag) {
+        foreach ($this->recognizer->getTags() as $recognizedRag) {
             $picture->addTag($recognizedRag);
         }
+
+        $picture->setDescription($this->recognizer->getDescription());
 
         $this->tagWriter->writeTags($picture);
 

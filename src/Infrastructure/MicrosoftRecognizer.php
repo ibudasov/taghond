@@ -46,7 +46,7 @@ class MicrosoftRecognizer implements Recognizer
     private $description;
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function recognize(Picture $picture): Picture
     {
@@ -139,8 +139,6 @@ class MicrosoftRecognizer implements Recognizer
 
     private function setDescription(): void
     {
-        $this->description = $this->decodedResponse->description->description;
+        $this->description = \current($this->decodedResponse->description->captions)->text;
     }
-
-
 }
