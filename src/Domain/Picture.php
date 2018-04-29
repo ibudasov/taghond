@@ -27,6 +27,11 @@ class Picture
     private $tags;
 
     /**
+     * @var string
+     */
+    private $description;
+
+    /**
      * Picture constructor.
      *
      * @param string $pathToFile
@@ -110,5 +115,21 @@ class Picture
         $pathInfo = \pathinfo($this->pathToFile);
 
         return $pathInfo['basename'];
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param string $description
+     */
+    public function setDescription(string $description): void
+    {
+        $this->description = $description;
     }
 }
