@@ -36,10 +36,11 @@ class RunCommandTest extends KernelTestCase
             ->with(RunCommand::TAGHOND_WORKING_DIRECTORY)
             ->andReturn([$pictureMock]);
 
+        $expectedCaptionPrefix = 'Norway, Trondheim: ';
         $pictureApplicationServiceMock = \Mockery::mock(PictureApplicationService::class);
         $pictureApplicationServiceMock->shouldReceive('updatePicture')
             ->once()
-            ->with($pictureMock)
+            ->with($pictureMock, $expectedCaptionPrefix)
             ->andReturn($pictureMock);
 
         $application->add(new RunCommand($fileReaderMock, $pictureApplicationServiceMock));
@@ -48,8 +49,8 @@ class RunCommandTest extends KernelTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
+            'captionPrefix' => $expectedCaptionPrefix,
             'basicTags' => 'landscape, amsterdam, netherlands',
-            'captionPrefix' => 'Norway, Trondheim: ',
         ]);
 
         $output = $commandTester->getDisplay();

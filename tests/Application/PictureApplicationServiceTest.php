@@ -16,53 +16,36 @@ class PictureApplicationServiceTest extends TestCase
 {
     public function testThatPictureCanBeUpdatedAccordingToNewTags(): void
     {
-        $pictureMock = \Mockery::mock(Picture::class);
-        $pictureMock->shouldReceive('setCaption')
-            ->once()
-            ->with('caption');
+        $picture = new Picture('/Users/igorbudasov/Projects/taghond/var/DSCF9321-HDR.jpg');
 
-        $currentTagMock = \Mockery::mock(Tag::class);
-        $currentTagsMock = [$currentTagMock];
+        $currentTag = new Tag('current');
+        $currentTags = [$currentTag];
 
         $tagReaderMock = \Mockery::mock(TagReader::class);
         $tagReaderMock->shouldReceive('readTags')
             ->once()
-            ->with($pictureMock)
-            ->andReturn($currentTagsMock);
+            ->with($picture)
+            ->andReturn($currentTags);
 
-        $recognizedTagMock = \Mockery::mock(Tag::class);
-        $recognizedTagsMock = [$recognizedTagMock];
+        $recognizedTag = new Tag('recognized');
+        $recognizedTags = [$recognizedTag];
 
         $recognizerMock = \Mockery::mock(Recognizer::class);
         $recognizerMock->shouldReceive('recognize')
             ->once()
-            ->with($pictureMock)
-            ->andReturn($pictureMock);
+            ->with($picture)
+            ->andReturn($picture);
         $recognizerMock->shouldReceive('getTags')
             ->once()
-            ->andReturn($recognizedTagsMock);
+            ->andReturn($recognizedTags);
         $recognizerMock->shouldReceive('getCaption')
             ->once()
             ->andReturn('caption');
 
-        $pictureMock->shouldReceive('addTag')
-            ->once()
-            ->with($currentTagMock)
-            ->andReturn(1);
-
-        $pictureMock->shouldReceive('addTag')
-            ->once()
-            ->with($recognizedTagMock)
-            ->andReturn(2);
-
         $tagWriterMock = \Mockery::mock(TagWriter::class);
         $tagWriterMock->shouldReceive('writeTags')
             ->once()
-            ->with($pictureMock);
-
-        $pictureMock->shouldReceive('getTags')
-            ->once()
-            ->andReturn([$currentTagMock, $recognizedTagMock]);
+            ->with($picture);
 
         $service = new PictureApplicationService(
             $tagReaderMock,
@@ -70,10 +53,12 @@ class PictureApplicationServiceTest extends TestCase
             $recognizerMock
         );
 
-        self::assertSame($pictureMock, $service->updatePicture($pictureMock));
-        self::assertEquals(
-            [$currentTagMock, $recognizedTagMock],
-            ($service->updatePicture($pictureMock))->getTags()
-        );
+        $expectedCaptionPrefix = 'CaptionPrefix: ';
+
+        $result = $service->updatePicture($picture, $expectedCaptionPrefix);
+
+        self::assertSame($picture, $result);
+        self::assertEquals([(string)$currentTag => $currentTag, (string)$recognizedTag => $recognizedTag], $result->getTags());
+        self::assertStringStartsWith($expectedCaptionPrefix, $result->getCaption());
     }
 }

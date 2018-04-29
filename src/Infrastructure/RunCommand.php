@@ -79,9 +79,8 @@ taghond:run "amsterdam, nederlands" "Norway, Trondheim: "');
             $progressBar->advance();
 
             $updatedPicture = $this->pictureApplicationService->updatePicture(
-                $picture
-//                $input->getArgument('captionPrefix'),
-//                $input->getArgument('basicTags')
+                $picture,
+                $input->getArgument('captionPrefix')
             );
 
             $table->addRow([
