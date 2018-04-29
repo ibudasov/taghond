@@ -26,11 +26,14 @@ class RunCommandTest extends KernelTestCase
         $pictureMock->shouldReceive('getFileName')
             ->once()
             ->andReturn('DSCF9146.jpg');
+        $pictureMock->shouldReceive('getCaption')
+            ->once()
+            ->andReturn('Some caption');
 
         $fileReaderMock = \Mockery::mock(FileReader::class);
         $fileReaderMock->shouldReceive('readDirectory')
             ->once()
-            ->with('/tmp')
+            ->with(RunCommand::TAGHOND_WORKING_DIRECTORY)
             ->andReturn([$pictureMock]);
 
         $pictureApplicationServiceMock = \Mockery::mock(PictureApplicationService::class);
@@ -45,9 +48,8 @@ class RunCommandTest extends KernelTestCase
         $commandTester = new CommandTester($command);
         $commandTester->execute([
             'command' => $command->getName(),
-            'directoryWithPictures' => '/tmp',
             'basicTags' => 'landscape, amsterdam, netherlands',
-            'geoTag' => '52.356582, 4.871792',
+            'captionPrefix' => 'Norway, Trondheim: ',
         ]);
 
         $output = $commandTester->getDisplay();

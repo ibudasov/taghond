@@ -15,6 +15,8 @@ use Taghond\Domain\FileReader;
 
 class RunCommand extends Command
 {
+    const TAGHOND_WORKING_DIRECTORY = __DIR__ . '/../../var';
+
     /** @var FileReader */
     private $fileReader;
     /** @var PictureApplicationService */
@@ -39,15 +41,15 @@ class RunCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('directoryWithPictures', InputArgument::REQUIRED, 'Where are your pictures located? Full path please: "/tmp"')
             ->addArgument('basicTags', InputArgument::REQUIRED, 'Specify here the tags you want to assign to all the pictures in this location. Suppose to be comma-separated words: "amsterdam, nederlands, landscape"')
-            ->addArgument('geoTag', InputArgument::REQUIRED, 'Latitude and longitude like this: "52.356582, 4.871792". You can get it from https://www.google.nl/maps/')
+            ->addArgument('captionPrefix', InputArgument::REQUIRED, 'Will be added to every picture in the set, e.g.: "Norway, Trondheim: "')
             ->setName('taghond:run')
             ->setDescription('Runs Taghond')
             ->setHelp(
-                'Once this command is running, Taghond will check the specified folder and try to set appropriate tags to the pictures.
+                'Please put your files to '.self::TAGHOND_WORKING_DIRECTORY.' before you start Taghond 
+Once running, Taghond will check the specified folder and try to set appropriate tags to the pictures.
 Command and parameters could look like this: 
-taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
+taghond:run "amsterdam, nederlands" "Norway, Trondheim: "');
     }
 
     /**
@@ -59,10 +61,11 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
         $output->writeln([
             'Taghond is running...',
             '=====================',
-            'Looking for pictures in directory: '.$input->getArgument('directoryWithPictures'),
+            'Looking for pictures in directory: '.self::TAGHOND_WORKING_DIRECTORY,
         ]);
 
-        $foundPictures = $this->fileReader->readDirectory($input->getArgument('directoryWithPictures'));
+
+        $foundPictures = $this->fileReader->readDirectory(self::TAGHOND_WORKING_DIRECTORY);
 
         $output->writeln('Found '.\count($foundPictures).' pictures');
 
@@ -70,13 +73,22 @@ taghond:run /tmp "amsterdam, nederlands" "52.356582, 4.871792"');
         $progressBar->start();
 
         $table = new Table($output);
-        $table->setHeaders(['Picture', 'Tags']);
+        $table->setHeaders(['Picture', 'Caption', 'Tags']);
 
         foreach ($foundPictures as $picture) {
             $progressBar->advance();
-            $updatedPicture = $this->pictureApplicationService->updatePicture($picture);
-            $tags = \implode(', '.PHP_EOL, $updatedPicture->getTags());
-            $table->addRow([$picture->getFileName(), $tags]);
+
+            $updatedPicture = $this->pictureApplicationService->updatePicture(
+                $picture
+//                $input->getArgument('captionPrefix'),
+//                $input->getArgument('basicTags')
+            );
+
+            $table->addRow([
+                $picture->getFileName(),
+                $picture->getCaption(),
+                \implode(PHP_EOL, $updatedPicture->getTags())
+            ]);
         }
 
         $progressBar->finish();
