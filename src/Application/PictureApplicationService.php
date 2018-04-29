@@ -6,6 +6,7 @@ namespace Taghond\Application;
 
 use Taghond\Domain\Picture;
 use Taghond\Domain\Recognizer;
+use Taghond\Domain\Tag;
 use Taghond\Domain\TagReader;
 use Taghond\Domain\TagWriter;
 
@@ -34,10 +35,15 @@ class PictureApplicationService
      * @param Picture $picture
      *
      * @param string $captionPrefix
+     * @param Tag[] $basicTags
      * @return Picture
      */
-    public function updatePicture(Picture $picture, string $captionPrefix): Picture
+    public function updatePicture(Picture $picture, string $captionPrefix, array $basicTags): Picture
     {
+        foreach ($basicTags as $basicTag) {
+            $picture->addTag($basicTag);
+        }
+
         $currentTags = $this->tagReader->readTags($picture);
 
         foreach ($currentTags as $currentTag) {

@@ -54,11 +54,17 @@ class PictureApplicationServiceTest extends TestCase
         );
 
         $expectedCaptionPrefix = 'CaptionPrefix: ';
+        $basicTag = new Tag('norway');
+        $basicTags = [$basicTag];
 
-        $result = $service->updatePicture($picture, $expectedCaptionPrefix);
+        $result = $service->updatePicture($picture, $expectedCaptionPrefix, $basicTags);
 
         self::assertSame($picture, $result);
-        self::assertEquals([(string)$currentTag => $currentTag, (string)$recognizedTag => $recognizedTag], $result->getTags());
+        self::assertEquals([
+            (string)$currentTag => $currentTag,
+            (string)$recognizedTag => $recognizedTag,
+            (string)$basicTag => $basicTag
+        ], $result->getTags());
         self::assertStringStartsWith($expectedCaptionPrefix, $result->getCaption());
     }
 }

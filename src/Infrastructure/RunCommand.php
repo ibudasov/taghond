@@ -12,6 +12,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Taghond\Application\PictureApplicationService;
 use Taghond\Domain\FileReader;
+use Taghond\Domain\Tag;
 
 class RunCommand extends Command
 {
@@ -67,6 +68,11 @@ taghond:run "amsterdam, nederlands" "Norway, Trondheim: "');
 
         $foundPictures = $this->fileReader->readDirectory(self::TAGHOND_WORKING_DIRECTORY);
 
+        $basicTags = [];
+        foreach (\explode(',', $input->getArgument('basicTags')) as $item) {
+            $basicTags[] = new Tag($item);
+        }
+
         $output->writeln('Found '.\count($foundPictures).' pictures');
 
         $progressBar = new ProgressBar($output, \count($foundPictures));
@@ -80,7 +86,8 @@ taghond:run "amsterdam, nederlands" "Norway, Trondheim: "');
 
             $updatedPicture = $this->pictureApplicationService->updatePicture(
                 $picture,
-                $input->getArgument('captionPrefix')
+                $input->getArgument('captionPrefix'),
+                $basicTags
             );
 
             $table->addRow([

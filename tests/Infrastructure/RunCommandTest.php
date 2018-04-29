@@ -10,6 +10,7 @@ use Symfony\Component\Console\Tester\CommandTester;
 use Taghond\Application\PictureApplicationService;
 use Taghond\Domain\FileReader;
 use Taghond\Domain\Picture;
+use Taghond\Domain\Tag;
 use Taghond\Infrastructure\RunCommand;
 
 class RunCommandTest extends KernelTestCase
@@ -37,10 +38,12 @@ class RunCommandTest extends KernelTestCase
             ->andReturn([$pictureMock]);
 
         $expectedCaptionPrefix = 'Norway, Trondheim: ';
+        $expectedBasicTags = [new Tag('landscape'), new Tag('amsterdam')];
+        $expectedImplodedBasicTags = \implode(',', $expectedBasicTags);
         $pictureApplicationServiceMock = \Mockery::mock(PictureApplicationService::class);
         $pictureApplicationServiceMock->shouldReceive('updatePicture')
             ->once()
-            ->with($pictureMock, $expectedCaptionPrefix)
+            ->with($pictureMock, $expectedCaptionPrefix, $expectedBasicTags)
             ->andReturn($pictureMock);
 
         $application->add(new RunCommand($fileReaderMock, $pictureApplicationServiceMock));
@@ -50,7 +53,7 @@ class RunCommandTest extends KernelTestCase
         $commandTester->execute([
             'command' => $command->getName(),
             'captionPrefix' => $expectedCaptionPrefix,
-            'basicTags' => 'landscape, amsterdam, netherlands',
+            'basicTags' => $expectedImplodedBasicTags,
         ]);
 
         $output = $commandTester->getDisplay();
