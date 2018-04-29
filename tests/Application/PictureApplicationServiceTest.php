@@ -17,9 +17,9 @@ class PictureApplicationServiceTest extends TestCase
     public function testThatPictureCanBeUpdatedAccordingToNewTags(): void
     {
         $pictureMock = \Mockery::mock(Picture::class);
-        $pictureMock->shouldReceive('setDescription')
+        $pictureMock->shouldReceive('setCaption')
             ->once()
-            ->with('description');
+            ->with('caption');
 
         $currentTagMock = \Mockery::mock(Tag::class);
         $currentTagsMock = [$currentTagMock];
@@ -41,9 +41,9 @@ class PictureApplicationServiceTest extends TestCase
         $recognizerMock->shouldReceive('getTags')
             ->once()
             ->andReturn($recognizedTagsMock);
-        $recognizerMock->shouldReceive('getDescription')
+        $recognizerMock->shouldReceive('getCaption')
             ->once()
-            ->andReturn('description');
+            ->andReturn('caption');
 
         $pictureMock->shouldReceive('addTag')
             ->once()

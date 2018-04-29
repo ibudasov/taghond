@@ -21,5 +21,5 @@ interface Recognizer
     /**
      * @return string
      */
-    public function getDescription(): string;
+    public function getCaption(): string;
 }

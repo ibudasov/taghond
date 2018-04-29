@@ -19,7 +19,7 @@ class MicrosoftRecognizer implements Recognizer
 {
     private const API_KEY = '115903d1abde4cbcb442d5a6714e5937';
     private const API_ENDPOINT = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze';
-    private const API_TYPE_OF_RECOGNITION = 'Tags,Description';
+    private const API_TYPE_OF_RECOGNITION = 'Description';
     private const API_HEADERS = [
         'Content-Type' => 'application/octet-stream',
         'Ocp-Apim-Subscription-Key' => self::API_KEY,
@@ -43,7 +43,7 @@ class MicrosoftRecognizer implements Recognizer
     /**
      * @var string
      */
-    private $description;
+    private $caption;
 
     /**
      * {@inheritdoc}
@@ -58,7 +58,7 @@ class MicrosoftRecognizer implements Recognizer
 
         $this->setTags();
 
-        $this->setDescription();
+        $this->setCaption();
 
         $this->deleteThumbnail($picture);
 
@@ -122,9 +122,9 @@ class MicrosoftRecognizer implements Recognizer
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getCaption(): string
     {
-        return $this->description;
+        return $this->caption;
     }
 
     private function setTags(): void
@@ -137,8 +137,8 @@ class MicrosoftRecognizer implements Recognizer
         $this->tags = $tags;
     }
 
-    private function setDescription(): void
+    private function setCaption(): void
     {
-        $this->description = \current($this->decodedResponse->description->captions)->text;
+        $this->caption = \current($this->decodedResponse->description->captions)->text;
     }
 }

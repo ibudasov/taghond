@@ -49,7 +49,7 @@ class PictureApplicationService
             $picture->addTag($recognizedRag);
         }
 
-        $picture->setDescription($this->recognizer->getDescription());
+        $picture->setCaption($this->recognizer->getCaption());
 
         $this->tagWriter->writeTags($picture);
 

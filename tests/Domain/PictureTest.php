@@ -66,14 +66,14 @@ class PictureTest extends TestCase
         );
     }
 
-    public function testThatPictureCanHaveADescription(): void
+    public function testThatPictureCanHaveACaption(): void
     {
         $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
-        $picture->setDescription('aurora borealis in Trondheim');
+        $picture->setCaption('aurora borealis in Trondheim');
 
         self::assertEquals(
             'aurora borealis in Trondheim',
-            $picture->getDescription()
+            $picture->getCaption()
         );
     }
 }

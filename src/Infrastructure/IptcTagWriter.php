@@ -38,7 +38,7 @@ class IptcTagWriter implements TagWriter
 
         $this->tagManager->setTagWithValues(Iptc::KEYWORDS, $tagsToWrite);
 
-        $this->tagManager->setTagWithValues(Iptc::CAPTION, [$picture->getDescription()]);
+        $this->tagManager->setTagWithValues(Iptc::CAPTION, [$picture->getCaption()]);
 
         $this->tagManager->write();
 

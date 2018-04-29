@@ -29,7 +29,7 @@ class Picture
     /**
      * @var string
      */
-    private $description;
+    private $caption;
 
     /**
      * Picture constructor.
@@ -120,16 +120,16 @@ class Picture
     /**
      * @return string
      */
-    public function getDescription(): string
+    public function getCaption(): string
     {
-        return $this->description;
+        return $this->caption;
     }
 
     /**
-     * @param string $description
+     * @param string $caption
      */
-    public function setDescription(string $description): void
+    public function setCaption(string $caption): void
     {
-        $this->description = $description;
+        $this->caption = $caption;
     }
 }
