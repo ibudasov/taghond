@@ -19,7 +19,7 @@ class MicrosoftRecognizer implements Recognizer
 {
     private const API_KEY = '115903d1abde4cbcb442d5a6714e5937';
     private const API_ENDPOINT = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze';
-    private const API_TYPE_OF_RECOGNITION = 'Description';
+    private const API_TYPE_OF_RECOGNITION = 'Description,Tags';
     private const API_HEADERS = [
         'Content-Type' => 'application/octet-stream',
         'Ocp-Apim-Subscription-Key' => self::API_KEY,
@@ -130,8 +130,8 @@ class MicrosoftRecognizer implements Recognizer
     private function setTags(): void
     {
         $tags = [];
-        foreach ($this->decodedResponse->description->tags as $tag) {
-            $tags[] = new Tag($tag);
+        foreach ($this->decodedResponse->tags as $tag) {
+            $tags[] = new Tag($tag->name);
         }
 
         $this->tags = $tags;
