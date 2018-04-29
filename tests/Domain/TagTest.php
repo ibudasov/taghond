@@ -26,4 +26,13 @@ class TagTest extends TestCase
 
         self::assertEquals($tagValue, (string) $tag);
     }
+
+    public function testThatTagIsPurifiedWhileCreated(): void
+    {
+        $tagValue = ' oslo  ';
+
+        $tag = new Tag($tagValue);
+
+        self::assertEquals('oslo', (string) $tag);
+    }
 }

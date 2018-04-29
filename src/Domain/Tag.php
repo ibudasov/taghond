@@ -14,7 +14,7 @@ class Tag
      */
     public function __construct(string $value)
     {
-        $this->value = $value;
+        $this->value = \trim($value);
     }
 
     /**
