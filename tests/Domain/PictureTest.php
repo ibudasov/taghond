@@ -71,11 +71,9 @@ class PictureTest extends TestCase
         $picture = new Picture('/Users/igorbudasov/Desktop/forShutterstock/DSCF9146.jpg');
         $picture->setDescription('aurora borealis in Trondheim');
 
-
         self::assertEquals(
             'aurora borealis in Trondheim',
             $picture->getDescription()
         );
-
     }
 }

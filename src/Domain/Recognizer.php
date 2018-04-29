@@ -9,7 +9,17 @@ interface Recognizer
     /**
      * @param Picture $picture
      *
+     * @return Picture
+     */
+    public function recognize(Picture $picture): Picture;
+
+    /**
      * @return Tag[]
      */
-    public function recognize(Picture $picture): array;
+    public function getTags(): array;
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string;
 }

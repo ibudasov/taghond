@@ -28,13 +28,12 @@ class PictureApplicationServiceTest extends TestCase
             ->andReturn($currentTagsMock);
 
         $recognizedTagMock = \Mockery::mock(Tag::class);
-        $recognizedTagsMock = [$recognizedTagMock];
 
         $recognizerMock = \Mockery::mock(Recognizer::class);
         $recognizerMock->shouldReceive('recognize')
             ->once()
             ->with($pictureMock)
-            ->andReturn($recognizedTagsMock);
+            ->andReturn($pictureMock);
 
         $pictureMock->shouldReceive('addTag')
             ->once()

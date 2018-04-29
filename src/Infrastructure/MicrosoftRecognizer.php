@@ -31,26 +31,38 @@ class MicrosoftRecognizer implements Recognizer
     ];
 
     /**
-     * @param Picture $picture
-     *
-     * @return Tag[]
+     * @var \stdClass
      */
-    public function recognize(Picture $picture): array
+    private $decodedResponse;
+
+    /**
+     * @var Tag[]
+     */
+    private $tags;
+
+    /**
+     * @var string
+     */
+    private $description;
+
+    /**
+     * @inheritdoc
+     */
+    public function recognize(Picture $picture): Picture
     {
         $this->generateThumbnail($picture);
 
         $response = $this->makeRequestToMicrosoft($picture);
 
-        $decodedResponse = \json_decode($response->getBody()->getContents());
+        $this->decodedResponse = \json_decode($response->getBody()->getContents());
 
-        $tags = [];
-        foreach ($decodedResponse->description->tags as $tag) {
-            $tags[] = new Tag($tag);
-        }
+        $this->setTags();
+
+        $this->setDescription();
 
         $this->deleteThumbnail($picture);
 
-        return $tags;
+        return $picture;
     }
 
     /**
@@ -98,4 +110,37 @@ class MicrosoftRecognizer implements Recognizer
 
         return $response;
     }
+
+    /**
+     * @return array
+     */
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    private function setTags(): void
+    {
+        $tags = [];
+        foreach ($this->decodedResponse->description->tags as $tag) {
+            $tags[] = new Tag($tag);
+        }
+
+        $this->tags = $tags;
+    }
+
+    private function setDescription(): void
+    {
+        $this->description = $this->decodedResponse->description->description;
+    }
+
+
 }
