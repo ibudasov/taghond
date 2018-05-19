@@ -4,22 +4,13 @@ declare(strict_types=1);
 
 namespace Taghond\Infrastructure;
 
+use iBudasov\Iptc\Domain\Tag;
+use iBudasov\Iptc\Manager;
 use Taghond\Domain\Picture;
 use Taghond\Domain\TagWriter;
 
 class IptcTagWriter implements TagWriter
 {
-    /** @var Iptc */
-    private $tagManager;
-
-    /**
-     * @param Iptc $tagManager
-     */
-    public function __construct(Iptc $tagManager)
-    {
-        $this->tagManager = $tagManager;
-    }
-
     /**
      * @param Picture $picture
      *
@@ -29,18 +20,19 @@ class IptcTagWriter implements TagWriter
      */
     public function writeTags(Picture $picture): Picture
     {
-        $this->tagManager->setFilePath($picture->getPathToFile());
+        $iptcTagManager = Manager::create();
 
-        $tagsToWrite = [];
+        $iptcTagManager->loadFile($picture->getPathToFile());
+
+        $keywords = [];
         foreach ($picture->getTags() as $tag) {
-            $tagsToWrite[] = $tag->getValue();
+            $keywords[] = $tag->getValue();
         }
 
-        $this->tagManager->setTagWithValues(Iptc::KEYWORDS, $tagsToWrite);
+        $iptcTagManager->addTag(new Tag(Tag::KEYWORDS, $keywords));
+        $iptcTagManager->addTag(new Tag(Tag::DESCRIPTION, [$picture->getCaption()]));
 
-        $this->tagManager->setTagWithValues(Iptc::CAPTION, [$picture->getCaption()]);
-
-        $this->tagManager->write();
+        $iptcTagManager->write();
 
         return $picture;
     }
