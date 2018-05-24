@@ -16,7 +16,7 @@ use Taghond\Domain\Tag;
 
 class RunCommand extends Command
 {
-    const TAGHOND_WORKING_DIRECTORY = __DIR__ . '/../../var';
+    const TAGHOND_WORKING_DIRECTORY = __DIR__.'/../../var';
 
     /** @var FileReader */
     private $fileReader;
@@ -65,7 +65,6 @@ taghond:run "amsterdam, nederlands" "Norway, Trondheim: "');
             'Looking for pictures in directory: '.self::TAGHOND_WORKING_DIRECTORY,
         ]);
 
-
         $foundPictures = $this->fileReader->readDirectory(self::TAGHOND_WORKING_DIRECTORY);
 
         $basicTags = [];
@@ -93,7 +92,7 @@ taghond:run "amsterdam, nederlands" "Norway, Trondheim: "');
             $table->addRow([
                 $picture->getFileName(),
                 $picture->getCaption(),
-                \implode(PHP_EOL, $updatedPicture->getTags())
+                \implode(PHP_EOL, $updatedPicture->getTags()),
             ]);
         }
 

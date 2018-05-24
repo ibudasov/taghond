@@ -19,13 +19,13 @@ class IptcTagReader implements TagReader
     public function readTags(Picture $picture): array
     {
         $iptcTagManager = Manager::create();
-        
+
         $iptcTagManager->loadFile($picture->getPathToFile());
-        
+
         $tags = $iptcTagManager->getTags();
 
         $result = [];
-        
+
         foreach ($tags as $tag) {
             $result[] = new Tag((string) $tag);
         }

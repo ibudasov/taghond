@@ -33,9 +33,9 @@ class PictureApplicationService
 
     /**
      * @param Picture $picture
+     * @param string  $captionPrefix
+     * @param Tag[]   $basicTags
      *
-     * @param string $captionPrefix
-     * @param Tag[] $basicTags
      * @return Picture
      */
     public function updatePicture(Picture $picture, string $captionPrefix, array $basicTags): Picture
@@ -56,7 +56,7 @@ class PictureApplicationService
             $picture->addTag($recognizedRag);
         }
 
-        $picture->setCaption($captionPrefix . $this->recognizer->getCaption());
+        $picture->setCaption($captionPrefix.$this->recognizer->getCaption());
 
         $this->tagWriter->writeTags($picture);
 

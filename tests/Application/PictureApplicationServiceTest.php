@@ -61,9 +61,9 @@ class PictureApplicationServiceTest extends TestCase
 
         self::assertSame($picture, $result);
         self::assertEquals([
-            (string)$currentTag => $currentTag,
-            (string)$recognizedTag => $recognizedTag,
-            (string)$basicTag => $basicTag
+            (string) $currentTag => $currentTag,
+            (string) $recognizedTag => $recognizedTag,
+            (string) $basicTag => $basicTag,
         ], $result->getTags());
         self::assertStringStartsWith($expectedCaptionPrefix, $result->getCaption());
     }
