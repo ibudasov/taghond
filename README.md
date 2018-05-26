@@ -19,5 +19,8 @@ Command will take a directory with pictures as a first param.
 Second param will be basic tags. 
 There could be the third parameter - geotag with location, because of image recognition service will work better with it. 
 
+#pre-requisites
+You must have API key, you can get it here
+https://docs.microsoft.com/en-us/azure/cognitive-services/computer-vision/quickstarts/php
 
 Also I can think of EventSourcing, it will provide nice report of updated images at the end.
