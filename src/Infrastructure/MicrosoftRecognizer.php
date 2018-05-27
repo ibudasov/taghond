@@ -17,13 +17,8 @@ use Taghond\Domain\Tag;
  */
 class MicrosoftRecognizer implements Recognizer
 {
-    private const API_KEY = '115903d1abde4cbcb442d5a6714e5937';
     private const API_ENDPOINT = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze';
     private const API_TYPE_OF_RECOGNITION = 'Description,Tags';
-    private const API_HEADERS = [
-        'Content-Type' => 'application/octet-stream',
-        'Ocp-Apim-Subscription-Key' => self::API_KEY,
-    ];
     private const API_QUERY_PARAMETERS = [
         'visualFeatures' => self::API_TYPE_OF_RECOGNITION,
         'details' => 'Landmarks',
@@ -102,7 +97,10 @@ class MicrosoftRecognizer implements Recognizer
         $response = $client->post(
             self::API_ENDPOINT,
             [
-                'headers' => self::API_HEADERS,
+                'headers' => [
+                    'Content-Type' => 'application/octet-stream',
+                    'Ocp-Apim-Subscription-Key' => \getenv('IMAGE_RECOGNITION_SERVICE_KEY'),
+                ],
                 'query' => self::API_QUERY_PARAMETERS,
                 'body' => \fopen($picture->getPathToThumbnailFile(), 'r'),
             ]

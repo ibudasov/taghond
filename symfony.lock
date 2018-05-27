@@ -38,6 +38,9 @@
     "hamcrest/hamcrest-php": {
         "version": "v2.0.0"
     },
+    "ibudasov/php7-iptc-manager": {
+        "version": "v1.0.0"
+    },
     "mockery/mockery": {
         "version": "1.0"
     },
