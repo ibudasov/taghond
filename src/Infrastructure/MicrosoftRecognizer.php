@@ -17,7 +17,7 @@ use Taghond\Domain\Tag;
  */
 class MicrosoftRecognizer implements Recognizer
 {
-    private const API_ENDPOINT = 'https://westcentralus.api.cognitive.microsoft.com/vision/v1.0/analyze';
+    private const API_ENDPOINT = 'https://westeurope.api.cognitive.microsoft.com/vision/v1.0/analyze';
     private const API_TYPE_OF_RECOGNITION = 'Description,Tags';
     private const API_QUERY_PARAMETERS = [
         'visualFeatures' => self::API_TYPE_OF_RECOGNITION,
